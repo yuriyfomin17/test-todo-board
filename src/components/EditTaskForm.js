@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Modal from "react-bootstrap/Modal";
-import {priorities} from "../utils/priority";
+import {priorities, urgentStatuses} from "../utils/priority";
 import {doneStatus} from "../utils/priority";
 import axios from 'axios';
 import {connect} from "react-redux";
@@ -8,11 +8,13 @@ import {getList} from "../redux/createAction";
 
 function EditTaskForm(props) {
     const {isEditTaskMode, setEditTaskMode, element, index, columnIndex, shrink} = props;
-    const {_id, name, description, priority} = element;
+    const {_id, name, description, priority, urgent} = element;
     const [taskTitle, setTaskTitle] = useState(name);
     const [taskDescription, setTaskDescription] = useState(description);
     const [taskPriority, setTaskPriority] = useState(priority);
     const [taskDoneStatus, setDoneStatus] = useState(doneStatus[1]);
+    const [urgentStatus, setUrgentStatus] = useState(urgent);
+
     const onTitleChange = (e) => {
         setTaskTitle(e.target.value);
     }
@@ -23,6 +25,10 @@ function EditTaskForm(props) {
 
     const onPriorityChange = (e) => {
         setTaskPriority(e.target.value);
+    }
+    const onUrgentChange = (e) => {
+        setUrgentStatus(e.target.value);
+
     }
     const onStatusChange = (e) => {
         setDoneStatus(e.target.value);
@@ -40,7 +46,7 @@ function EditTaskForm(props) {
     const onSave = () => {
         let column = columnIndex + 1
         axios({
-            url: "https://kanban-board-server-dnd.herokuapp.com/todo/update",
+            url: "http://localhost:5000/todo/update",
             method: 'PATCH',
             data: {
                 id: _id,
@@ -48,6 +54,7 @@ function EditTaskForm(props) {
                 column: column,
                 name: taskTitle,
                 description: taskDescription,
+                urgent:urgentStatus,
                 done: taskDoneStatus==='Done',
                 shrink: shrink,
                 priority: taskPriority
@@ -87,6 +94,16 @@ function EditTaskForm(props) {
                         {
                             priorities.map((priority) => {
                                 return <option key={priority} value={priority}>{priority}</option>;
+                            })
+                        }
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="urgent">Urgent</label>
+                    <select id="urgent" className="form-control" value={urgentStatus} onChange={onUrgentChange}>
+                        {
+                            urgentStatuses.map((urgStat) => {
+                                return <option key={urgStat} value={urgStat}>{urgStat}</option>;
                             })
                         }
                     </select>

@@ -12,21 +12,18 @@ function Task(props) {
     const {index} = props
     const {element} = props
     const {columnIndex} = props
-    const {_id, name, description, priority, done, shrink} = element
+    const {_id, name, description, priority,urgent, done, shrink} = element
     console.log(element)
     const [isEditTaskMode, setEditTaskMode] = useState(false);
     const [isDeleteTaskMode, setDeleteTaskMode] = useState(false);
     const [descriptionCopy, setDescriptionCopy] = useState(description)
     const setCSSPriorityColor = () => {
         let titleClassName = 'rounded-sm text-black font-weight-bold text-center m-0 p-1 ';
-        switch (priority) {
-            case 1:
+        switch (urgent) {
+            case "YES":
                 titleClassName += 'alert-danger'
                 break
-            case 2:
-                titleClassName += 'alert-warning'
-                break
-            case 3:
+            case "NO":
                 titleClassName += 'alert-success'
                 break
             default:
@@ -54,6 +51,7 @@ function Task(props) {
                 description: description,
                 done: done,
                 shrink: !shrink,
+                urgent:urgent,
                 priority: priority
 
             }
@@ -101,6 +99,8 @@ function Task(props) {
 
                             <div className="text-secondary p-2 row">
                                 <div className="col-7 text-left">Priority:{priority}</div>
+                                <div className="col-7 text-left">Urgent:{urgent}</div>
+
                                 <div className="col-5 text-right">
                                     {shrink ?
                                         <i className="fa fa-compress rounded-sm icon" onClick={shortenText}/>

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Modal from "react-bootstrap/Modal";
 import {priorities} from "../utils/priority";
 import {statuses} from "../utils/priority";
+import {urgentStatuses} from "../utils/priority";
 import {connect} from "react-redux";
 import axios from 'axios';
 import {getList} from "../redux/createAction";
@@ -12,6 +13,7 @@ function CreateTaskForm(props) {
     const [taskTitle, setTaskTitle] = useState('');
     const [taskDescription, setTaskDescription] = useState('');
     const [taskPriority, setTaskPriority] = useState(priorities[0]);
+    const [urgentStatus, setUrgentStatus] = useState(urgentStatuses[0]);
     const [columnStatus, setColumnStatus] = useState(statuses[0]);
     const onCancel = () => {
         setTaskTitle('');
@@ -25,10 +27,11 @@ function CreateTaskForm(props) {
             url: 'http://localhost:5000/todo/create',
             method: 'POST',
             data: {
-                column:(statuses.indexOf(columnStatus)+1),
+                column: (statuses.indexOf(columnStatus) + 1),
                 name: taskTitle,
                 description: taskDescription,
                 priority: taskPriority,
+                urgent: urgentStatus,
                 shrink: false,
                 done: false
             },
@@ -76,6 +79,17 @@ function CreateTaskForm(props) {
                             onChange={(e) => setColumnStatus(e.target.value)}>
                         {
                             statuses.map((status) => {
+                                return <option key={status} value={status}>{status}</option>;
+                            })
+                        }
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="urgent">Urgent</label>
+                    <select id="urgent" className="form-control" defaultValue={columnStatus}
+                            onChange={(e) => setUrgentStatus(e.target.value)}>
+                        {
+                            urgentStatuses.map((status) => {
                                 return <option key={status} value={status}>{status}</option>;
                             })
                         }
