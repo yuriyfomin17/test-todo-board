@@ -8,7 +8,7 @@ import {getList} from "../redux/createAction";
 
 function EditTaskForm(props) {
     const {isEditTaskMode, setEditTaskMode, element, index, columnIndex, shrink} = props;
-    const {_id, name, description, priority, urgent} = element;
+    const {_id, name, description, urgent} = element;
     const [taskTitle, setTaskTitle] = useState(name);
     const [taskDescription, setTaskDescription] = useState(description);
     const [taskDoneStatus, setDoneStatus] = useState(doneStatus[1]);
