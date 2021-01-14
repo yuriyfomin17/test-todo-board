@@ -41,7 +41,7 @@ function EditTaskForm(props) {
     const onSave = () => {
         let column = columnIndex + 1
         axios({
-            url: "http://localhost:5000/todo/update",
+            url: "https://test-server-yuriy.herokuapp.com/todo/update",
             method: 'PATCH',
             data: {
                 id: _id,

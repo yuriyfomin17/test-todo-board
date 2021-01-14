@@ -4,7 +4,7 @@ export function getList  () {
 
     return (dispatch) => {
         axios({
-            url: 'http://localhost:5000/todo/getAll',
+            url: 'https://test-server-yuriy.herokuapp.com/todo/getAll',
             method: 'GET'
         })
             .then(res => {

@@ -22,7 +22,7 @@ function CreateTaskForm(props) {
 
     const addNewTask = async () => {
         await axios({
-            url: 'http://localhost:5000/todo/create',
+            url: 'https://test-server-yuriy.herokuapp.com/todo/create',
             method: 'POST',
             data: {
                 column: (statuses.indexOf(columnStatus) + 1),

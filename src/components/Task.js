@@ -12,7 +12,7 @@ function Task(props) {
     const {index} = props
     const {element} = props
     const {columnIndex} = props
-    const {_id, name, description, priority,urgent, done, shrink} = element
+    const {_id, name, description,urgent, done, shrink} = element
     console.log(element)
     const [isEditTaskMode, setEditTaskMode] = useState(false);
     const [isDeleteTaskMode, setDeleteTaskMode] = useState(false);
@@ -42,7 +42,7 @@ function Task(props) {
     const shortenText = () => {
         let column = columnIndex + 1
         axios({
-            url: "http://localhost:5000/todo/update",
+            url: "https://test-server-yuriy.herokuapp.com/todo/update",
             method: 'PATCH',
             data: {
                 id: _id,
@@ -51,8 +51,7 @@ function Task(props) {
                 description: description,
                 done: done,
                 shrink: !shrink,
-                urgent:urgent,
-                priority: priority
+                urgent:urgent
 
             }
         })
@@ -98,7 +97,6 @@ function Task(props) {
                             }
 
                             <div className="text-secondary p-2 row">
-                                <div className="col-7 text-left">Priority:{priority}</div>
                                 <div className="col-7 text-left">Urgent:{urgent}</div>
 
                                 <div className="col-5 text-right">
