@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Modal from "react-bootstrap/Modal";
-import {priorities, urgentStatuses} from "../utils/priority";
+import { urgentStatuses} from "../utils/priority";
 import {doneStatus} from "../utils/priority";
 import axios from 'axios';
 import {connect} from "react-redux";
@@ -11,7 +11,6 @@ function EditTaskForm(props) {
     const {_id, name, description, priority, urgent} = element;
     const [taskTitle, setTaskTitle] = useState(name);
     const [taskDescription, setTaskDescription] = useState(description);
-    const [taskPriority, setTaskPriority] = useState(priority);
     const [taskDoneStatus, setDoneStatus] = useState(doneStatus[1]);
     const [urgentStatus, setUrgentStatus] = useState(urgent);
 
@@ -23,9 +22,6 @@ function EditTaskForm(props) {
         setTaskDescription(e.target.value);
     }
 
-    const onPriorityChange = (e) => {
-        setTaskPriority(e.target.value);
-    }
     const onUrgentChange = (e) => {
         setUrgentStatus(e.target.value);
 
@@ -40,7 +36,6 @@ function EditTaskForm(props) {
     const onHide = () => {
         setTaskTitle(name);
         setTaskDescription(description);
-        setTaskPriority(priority);
         setEditTaskMode(false);
     }
     const onSave = () => {
@@ -57,7 +52,6 @@ function EditTaskForm(props) {
                 urgent:urgentStatus,
                 done: taskDoneStatus==='Done',
                 shrink: shrink,
-                priority: taskPriority
 
             }
         })
@@ -69,7 +63,6 @@ function EditTaskForm(props) {
             })
         setTaskTitle(taskTitle);
         setTaskDescription(taskDescription);
-        setTaskPriority(taskPriority);
         setDoneStatus(taskDoneStatus)
         setEditTaskMode(false);
 
@@ -87,16 +80,6 @@ function EditTaskForm(props) {
                     <label htmlFor="description">Description</label>
                     <textarea className="form-control min-h-100" id="description" defaultValue={taskDescription}
                               onChange={onDescriptionChange} placeholder="Enter Task Description..."/>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="priority">Priority</label>
-                    <select id="priority" className="form-control" value={taskPriority} onChange={onPriorityChange}>
-                        {
-                            priorities.map((priority) => {
-                                return <option key={priority} value={priority}>{priority}</option>;
-                            })
-                        }
-                    </select>
                 </div>
                 <div className="form-group">
                     <label htmlFor="urgent">Urgent</label>

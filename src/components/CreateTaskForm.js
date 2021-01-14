@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import Modal from "react-bootstrap/Modal";
-import {priorities} from "../utils/priority";
 import {statuses} from "../utils/priority";
 import {urgentStatuses} from "../utils/priority";
 import {connect} from "react-redux";
@@ -12,7 +11,6 @@ function CreateTaskForm(props) {
     const {isCreateTaskMode, setCreateTaskMode} = props;
     const [taskTitle, setTaskTitle] = useState('');
     const [taskDescription, setTaskDescription] = useState('');
-    const [taskPriority, setTaskPriority] = useState(priorities[0]);
     const [urgentStatus, setUrgentStatus] = useState(urgentStatuses[0]);
     const [columnStatus, setColumnStatus] = useState(statuses[0]);
     const onCancel = () => {
@@ -30,7 +28,6 @@ function CreateTaskForm(props) {
                 column: (statuses.indexOf(columnStatus) + 1),
                 name: taskTitle,
                 description: taskDescription,
-                priority: taskPriority,
                 urgent: urgentStatus,
                 shrink: false,
                 done: false
@@ -60,18 +57,6 @@ function CreateTaskForm(props) {
                     <textarea className="form-control min-h-100" id="description" defaultValue={taskDescription}
                               placeholder="Enter Task Description..."
                               onChange={(e) => setTaskDescription(e.target.value)}/>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="priority">Priority</label>
-                    <select id="priority" className="form-control" defaultValue={taskPriority}
-                            onChange={(e) => setTaskPriority(e.target.value)}
-                    >
-                        {
-                            priorities.map((priority) => {
-                                return <option key={priority} value={priority}>{priority}</option>;
-                            })
-                        }
-                    </select>
                 </div>
                 <div className="form-group">
                     <label htmlFor="priority">Status</label>
